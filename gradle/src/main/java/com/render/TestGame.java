@@ -37,7 +37,15 @@ public class TestGame implements ILogic {
             3, 1, 2
         };
 
-        model = loader.loadModel(verticies, indicies);
+        float[] textureCoords = {
+            0,0,
+            0,1,
+            1,1,
+            1,0
+        };
+
+        model = loader.loadModel(verticies, textureCoords, indicies);
+        model.setTexture(new Texture(loader.loadTexture("textures/grassblock.png")));
     }
 
     public void input() {

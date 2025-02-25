@@ -21,10 +21,11 @@ public class ObjectLoader {
     private List<Integer> vbos = new ArrayList<>();
     private List<Integer> textures = new ArrayList<>();
 
-    public Model loadModel(float[] verticies, int[] indicies) {
+    public Model loadModel(float[] verticies, float[] textureCoords, int[] indicies) {
         int id = createVAO();
         storeIndiciesBuffer(indicies);
         storeDataInAttribList(0, 3, verticies);
+        storeDataInAttribList(1, 2, )
         unbind();
         return new Model(id, indicies.length);
     }
@@ -47,6 +48,10 @@ public class ObjectLoader {
 
         int id = GL11.glGenTextures();
         textures.add(id);
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, id);
+        GL11.glPixelStorei(GL11.GL_UNPACK_ALIGNMENT, 1);
+        GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, width, height, 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, buffer);
+        GL30.stbi_image_free(buffer);
         return id;
     }
 
@@ -85,6 +90,9 @@ public class ObjectLoader {
         }
         for (int vbo : vbos) {
             GL30.glDeleteBuffers(vbo);
+        }
+        for (int texture : textures) {
+            GL11.glDeleteTextures(texture);
         }
     }
 }
