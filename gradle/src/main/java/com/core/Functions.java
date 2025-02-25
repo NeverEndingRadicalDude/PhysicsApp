@@ -1,5 +1,7 @@
 package com.core;
 
+import java.lang.Math;
+
 public class Functions {
   
   public static double getMag(float[] inVec) {
