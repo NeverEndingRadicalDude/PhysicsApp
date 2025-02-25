@@ -24,6 +24,7 @@ public class RenderManager {
         shader.createFragmentShader(Utils.loadResource("/shaders/fragment.fs"));
         shader.link();
         shader.createUniform("textureSampler");
+        shader.createUniform("transformationMatrix");
     }
 
     public void render(Model model) {

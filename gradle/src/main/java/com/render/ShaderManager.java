@@ -36,8 +36,27 @@ public class ShaderManager {
         }
     }
 
+    public void setUniform(String uniformName, Vector3f value) {
+        GL20.glUniformMatrix3fv(uniforms.get(uniformName), value.x, value.y, value.z);
+    }
+
+    public void setUniform(String uniformName, Vector4f value) {
+        GL20.glUniformMatrix4fv(uniforms.get(uniformName), value.x, value.y, value.z, value.w);
+    }
+
+    public void setUniform(String uniformName, boolean value) {
+        float res = 0;
+        if(value) 
+            res = 1;
+        GL20.glUniform1f(uniforms.get(uniformName), res);
+    }
+
     public void setUniform(String uniformName, int value) {
         GL20.glUniform1i(uniforms.get(uniformName), value);
+    }
+
+    public void setUniform(String uniformName, float value) {
+        GL20.glUniform1f(uniforms.get(uniformName), value);
     }
 
     public void createVertexShader(String shaderCode) throws Exception {
