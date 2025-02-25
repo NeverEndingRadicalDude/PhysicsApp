@@ -27,13 +27,11 @@ public class TestGame implements ILogic {
             -0.5f, 0.5f, 0f,
             -0.5f, -0.5f, 0f,
             0.5f, -0.5f, 0f,
-            0.5f, -0.5f, 0f,
-            0.5f, 0.5f, 0f,
-            -0.5f, 0.5f, 0f
+            0.5f, 0.5f, 0f
         };
 
         int[] indicies = {
-            1, 2, 3,
+            0, 1, 3,
             3, 1, 2
         };
 
