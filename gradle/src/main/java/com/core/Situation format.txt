@@ -1,0 +1,31 @@
+name 20 bytes
+description 100 bytes
+numOfObjs 2 bytes
+
+
+$ffff
+objReferenceIndex 2 bytes
+objName 20 bytes
+objStlPath (goes in /(localDir)/stl) 50 bytes
+objSavedSpritePath (goes in /(localDir)/Sprites) 50 bytes
+objPointNum 2 bytes
+objFaceNum 2 bytes
+objPosOffset // from first saved point and ($xxxxyyyyzzzz) 12 bytes 
+objRotationMatrix // x y z, in radians, one line ($xxxxyyyyzzzz) 12 bytes
+objMovementVec // from the cenOfMass m/s, i j k ($xxxxyyyyzzzz) 12 bytes
+objRotationVec // x y z, radians per second ($xxxxyyyyzzzz) 12 bytes
+$fffe
+objPointVars // from each point in order on the SavedSprite file
+referenceIndex // 2 bytes
+Fx Fy Fz ($xxxxyyyyzzzz) 12 bytes
+mass 2 bytes
+Vx Vy Vz ($xxxxyyyyzzzz) 12 bytes
+name 20 bytes
+Px Py Pz ($xxxxyyyyzzzz) 12 bytes
+mat 2 bytes
+temp 4 bytes 32bitfloat,
+$0000 
+$fffd
+
+
+
