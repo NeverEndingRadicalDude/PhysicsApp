@@ -93,8 +93,8 @@ public class EngineManager {
     }
 
     private void update() {
-        engineLogic.update();
         window.update();
+        engineLogic.update();
     }
 
     private void render() {

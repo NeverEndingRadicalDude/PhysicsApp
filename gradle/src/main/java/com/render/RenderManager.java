@@ -7,6 +7,7 @@ import org.lwjgl.opengl.GL30;
 
 import com.core.Main;
 import com.render.entity.Model;
+import com.render.entity.Entity;
 import com.render.utils.Utils;
 
 public class RenderManager {
