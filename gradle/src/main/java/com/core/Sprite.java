@@ -1,6 +1,7 @@
 package com.core;
 
 import java.util.ArrayList;
+import java.nio.ByteBuffer;
 
 public class Sprite {
     private ArrayList<Point> points;
@@ -8,10 +9,10 @@ public class Sprite {
     private float[] cenOfMass;
     private String path;
     private String texturePath;
-    private int referenceID;
+    private short referenceID;
 
 
-    public Sprite(float[][] pos, float[][] forces, float[] masses, int material, String name, float[] temps, int referenceID) {
+    public Sprite(float[][] pos, float[][] forces, float[] masses, int material, String name, float[] temps, short referenceID) {
         float[] blank = new float[]{0, 0, 0};
         points = new ArrayList<Point>();
         cenOfMass = new float[3];
@@ -24,8 +25,8 @@ public class Sprite {
     }
 
     public ArrayList<byte> toByteList() {
-        ArrayList<byte> temp = new ArrayList<byte>();
-
+        ByteBuffer ref = ByteBuffer.allocate(2);
+        ref.putShort(referenceID);
         
     }
 

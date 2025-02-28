@@ -56,7 +56,7 @@ public class Situation {
                 break;
             }
             index += 2;
-            int spriteRef = java.nio.ByteBuffer.wrap(Arrays.copyOfRange(bytes, index, (index + 2))).order(java.nio.ByteOrder.LITTLE_ENDIAN).getInt();
+            short spriteRef = java.nio.ByteBuffer.wrap(Arrays.copyOfRange(bytes, index, (index + 2))).order(java.nio.ByteOrder.LITTLE_ENDIAN).getInt();
             index += 2;
             String spriteName = new String(Arrays.copyOfRange(bytes, index, (int) (index + 20)));
             index += 20;
@@ -106,7 +106,7 @@ public class Situation {
                 System.exit(0);
             }
 
-            int[] pointRef = new int[numPoints];
+            short[] pointRef = new int[numPoints];
             float[][] pointF = new float[numPoints][3];
             float[] pointMass = new float[numPoints];
             float[][] pointV = new float[numPoints][3];
