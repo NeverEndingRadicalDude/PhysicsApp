@@ -25,8 +25,13 @@ public class Sprite {
     }
 
     public ArrayList<byte> toByteList() {
-        ByteBuffer ref = ByteBuffer.allocate(2);
-        ref.putShort(referenceID);
+        int length = 0;
+        length += 2; // refID
+        length += 20; // name;
+        length += 50; // stlPath
+        length += 50; // savedSpritePath
+        length += 
+        byte[] temp = new byte[length];
         
     }
 

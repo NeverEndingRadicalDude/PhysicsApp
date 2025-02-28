@@ -56,18 +56,18 @@ public class Situation {
                 break;
             }
             index += 2;
-            short spriteRef = java.nio.ByteBuffer.wrap(Arrays.copyOfRange(bytes, index, (index + 2))).order(java.nio.ByteOrder.LITTLE_ENDIAN).getInt();
-            index += 2;
+            int spriteRef = java.nio.ByteBuffer.wrap(Arrays.copyOfRange(bytes, index, (index + 4))).order(java.nio.ByteOrder.LITTLE_ENDIAN).getInt();
+            index += 4;
             String spriteName = new String(Arrays.copyOfRange(bytes, index, (int) (index + 20)));
             index += 20;
             String spriteStlPath = new String(Arrays.copyOfRange(bytes, index, (index + 50)));
             index += 50;
             String savedSpritePath = new String(Arrays.copyOfRange(bytes,index, (index + 50)));
             index += 50;
-            int numPoints = java.nio.ByteBuffer.wrap(Arrays.copyOfRange(bytes, index, (index + 2))).order(java.nio.ByteOrder.LITTLE_ENDIAN).getInt();
-            index += 2;
-            int numFaces = java.nio.ByteBuffer.wrap(Arrays.copyOfRange(bytes, index, (index + 2))).order(java.nio.ByteOrder.LITTLE_ENDIAN).getInt();
-            index += 2;
+            int numPoints = java.nio.ByteBuffer.wrap(Arrays.copyOfRange(bytes, index, (index + 4))).order(java.nio.ByteOrder.LITTLE_ENDIAN).getInt();
+            index += 4;
+            int numFaces = java.nio.ByteBuffer.wrap(Arrays.copyOfRange(bytes, index, (index + 4))).order(java.nio.ByteOrder.LITTLE_ENDIAN).getInt();
+            index += 4;
 
             float[] posOffSet = new float[3];
             posOffSet[0] = java.nio.ByteBuffer.wrap(Arrays.copyOfRange(bytes, index, (index + 4))).order(java.nio.ByteOrder.LITTLE_ENDIAN).getFloat();
@@ -101,7 +101,7 @@ public class Situation {
             rotMov[2] = java.nio.ByteBuffer.wrap(Arrays.copyOfRange(bytes, index, (index + 4))).order(java.nio.ByteOrder.LITTLE_ENDIAN).getFloat();
             index += 4;
 
-            if (java.nio.ByteBuffer.wrap(Arrays.copyOfRange(bytes, index, (index + 2))).order(java.nio.ByteOrder.LITTLE_ENDIAN).getInt() != 65534) {
+            if (java.nio.ByteBuffer.wrap(Arrays.copyOfRange(bytes, index, (index + 2))).order(java.nio.ByteOrder.LITTLE_ENDIAN).getShort() != 65534) {
                 System.out.println("SituationError 3");
                 System.exit(0);
             }
@@ -125,34 +125,34 @@ public class Situation {
                     break;
                 }
                 String[] obj = new String[14];
-                pointRef[ind] = java.nio.ByteBuffer.wrap(Arrays.copyOfRange(tempBuffer, 0, 2)).order(java.nio.ByteOrder.LITTLE_ENDIAN).getInt();
+                pointRef[ind] = java.nio.ByteBuffer.wrap(Arrays.copyOfRange(tempBuffer, 0, 4)).order(java.nio.ByteOrder.LITTLE_ENDIAN).getInt();
                 // fx fy fz
-                pointF[ind][0] = java.nio.ByteBuffer.wrap(Arrays.copyOfRange(tempBuffer, 2, 6)).order(java.nio.ByteOrder.LITTLE_ENDIAN).getFloat();
-                pointF[ind][1] = java.nio.ByteBuffer.wrap(Arrays.copyOfRange(tempBuffer, 6, 10)).order(java.nio.ByteOrder.LITTLE_ENDIAN).getFloat();
-                pointF[ind][2] = java.nio.ByteBuffer.wrap(Arrays.copyOfRange(tempBuffer, 10, 14)).order(java.nio.ByteOrder.LITTLE_ENDIAN).getFloat();
+                pointF[ind][0] = java.nio.ByteBuffer.wrap(Arrays.copyOfRange(tempBuffer, 4, 8)).order(java.nio.ByteOrder.LITTLE_ENDIAN).getFloat();
+                pointF[ind][1] = java.nio.ByteBuffer.wrap(Arrays.copyOfRange(tempBuffer, 8, 12)).order(java.nio.ByteOrder.LITTLE_ENDIAN).getFloat();
+                pointF[ind][2] = java.nio.ByteBuffer.wrap(Arrays.copyOfRange(tempBuffer, 12, 16)).order(java.nio.ByteOrder.LITTLE_ENDIAN).getFloat();
                 // mass
-                pointMass[ind] = java.nio.ByteBuffer.wrap(Arrays.copyOfRange(tempBuffer, 14, 18)).order(java.nio.ByteOrder.LITTLE_ENDIAN).getFloat();
+                pointMass[ind] = java.nio.ByteBuffer.wrap(Arrays.copyOfRange(tempBuffer, 16, 20)).order(java.nio.ByteOrder.LITTLE_ENDIAN).getFloat();
                 //vx vy vz
-                pointV[ind][0] = java.nio.ByteBuffer.wrap(Arrays.copyOfRange(tempBuffer, 18, 22)).order(java.nio.ByteOrder.LITTLE_ENDIAN).getFloat();
-                pointV[ind][1] = java.nio.ByteBuffer.wrap(Arrays.copyOfRange(tempBuffer, 22, 26)).order(java.nio.ByteOrder.LITTLE_ENDIAN).getFloat();
-                pointV[ind][2] = java.nio.ByteBuffer.wrap(Arrays.copyOfRange(tempBuffer, 26, 30)).order(java.nio.ByteOrder.LITTLE_ENDIAN).getFloat();
+                pointV[ind][0] = java.nio.ByteBuffer.wrap(Arrays.copyOfRange(tempBuffer, 20, 24)).order(java.nio.ByteOrder.LITTLE_ENDIAN).getFloat();
+                pointV[ind][1] = java.nio.ByteBuffer.wrap(Arrays.copyOfRange(tempBuffer, 24, 28)).order(java.nio.ByteOrder.LITTLE_ENDIAN).getFloat();
+                pointV[ind][2] = java.nio.ByteBuffer.wrap(Arrays.copyOfRange(tempBuffer, 28, 32)).order(java.nio.ByteOrder.LITTLE_ENDIAN).getFloat();
                 // name
-                pointName[ind] = new String(Arrays.copyOfRange(tempBuffer, 30, 50));
+                pointName[ind] = new String(Arrays.copyOfRange(tempBuffer, 32, 52));
                 // px py pz
-                pointP[ind][0] = java.nio.ByteBuffer.wrap(Arrays.copyOfRange(tempBuffer, 50, 54)).order(java.nio.ByteOrder.LITTLE_ENDIAN).getFloat();
-                pointP[ind][1] = java.nio.ByteBuffer.wrap(Arrays.copyOfRange(tempBuffer, 54, 58)).order(java.nio.ByteOrder.LITTLE_ENDIAN).getFloat();
-                pointP[ind][2] = java.nio.ByteBuffer.wrap(Arrays.copyOfRange(tempBuffer, 58, 62)).order(java.nio.ByteOrder.LITTLE_ENDIAN).getFloat();
+                pointP[ind][0] = java.nio.ByteBuffer.wrap(Arrays.copyOfRange(tempBuffer, 52, 56)).order(java.nio.ByteOrder.LITTLE_ENDIAN).getFloat();
+                pointP[ind][1] = java.nio.ByteBuffer.wrap(Arrays.copyOfRange(tempBuffer, 56, 60)).order(java.nio.ByteOrder.LITTLE_ENDIAN).getFloat();
+                pointP[ind][2] = java.nio.ByteBuffer.wrap(Arrays.copyOfRange(tempBuffer, 60, 64)).order(java.nio.ByteOrder.LITTLE_ENDIAN).getFloat();
                 // mat
-                pointMat[ind] = java.nio.ByteBuffer.wrap(Arrays.copyOfRange(tempBuffer, 62, 64)).order(java.nio.ByteOrder.LITTLE_ENDIAN).getInt();
+                pointMat[ind] = java.nio.ByteBuffer.wrap(Arrays.copyOfRange(tempBuffer, 64, 68)).order(java.nio.ByteOrder.LITTLE_ENDIAN).getInt();
                 // temperature
-                pointTemp[ind] = java.nio.ByteBuffer.wrap(Arrays.copyOfRange(tempBuffer, 64, 68)).order(java.nio.ByteOrder.LITTLE_ENDIAN).getFloat();
-                int temp2 = java.nio.ByteBuffer.wrap(Arrays.copyOfRange(tempBuffer, 68, 70)).order(java.nio.ByteOrder.LITTLE_ENDIAN).getInt();
+                pointTemp[ind] = java.nio.ByteBuffer.wrap(Arrays.copyOfRange(tempBuffer, 68, 72)).order(java.nio.ByteOrder.LITTLE_ENDIAN).getFloat();
+                short temp2 = java.nio.ByteBuffer.wrap(Arrays.copyOfRange(tempBuffer, 72, 74)).order(java.nio.ByteOrder.LITTLE_ENDIAN).getShort();
                 if (temp2 != 0) {
                     System.out.println("SituationError 1");
                     System.exit(0);
                 }
                 ind++;
-                index += 70;
+                index += 74;
 
             }
             if (java.nio.ByteBuffer.wrap(Arrays.copyOfRange(bytes, index, (index + 2))).order(java.nio.ByteOrder.LITTLE_ENDIAN).getInt() == 65533) {
@@ -169,7 +169,7 @@ public class Situation {
         return true;   
     }
 
-    public ArrayList<> getSprites() {
+    public ArrayList<Sprite> getSprites() {
         return sprites;
     }
 
