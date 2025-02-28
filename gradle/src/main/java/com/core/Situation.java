@@ -10,11 +10,11 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class Situation {
-    private ArrayList<String[]> objects;
+    private ArrayList<ArrayList<bytes>> objects;
     private String path;
     private File file;
     private String name;
-    private String desc;
+    private String discription;
     private int objNum;
     private ArrayList<Sprite> sprites;
 
@@ -22,39 +22,29 @@ public class Situation {
     private float convertFloat(byte[] num) {
         return java.nio.ByteBuffer.wrap(num).order(java.nio.ByteOrder.LITTLE_ENDIAN).getFloat();
     }
-    public Situation(String p) {
+
+    public Situation(String p) throws Exception {
         path = p;
         file = new File(path);
-
+        read();
     }
 
-    private boolean read() {
+    private boolean read() throws Exception {
         Scanner scan;
-        try {
-            scan = new Scanner(file);
-        } catch(FileNotFoundException e) {
-            System.out.println(e);
-        }
+        scan = new Scanner(file);
         FileInputStream in = null;
-        try {
-            in = new FileInputStream(file);
-        } catch(FileNotFoundException e) {
-            System.out.println(e);
-        }
+        in = new FileInputStream(file);
+
         byte[] bytes = new byte[(int) file.length()];
-        try {
-            in.read(bytes);
-        } catch(IOException e) {
-            System.out.println(e);
-        }
+        in.read(bytes);
+        System.out.println(e);
+
         int index = 124;
         boolean check = false;
-        try {
+
         name = new String(Arrays.copyOfRange(bytes, 0, 20), "UTF-8");
-        desc = new String(Arrays.copyOfRange(bytes, 20, 120), "UTF-8");
-        } catch(UnsupportedEncodingException e) {
-            System.out.println(e);
-        }
+        discription = new String(Arrays.copyOfRange(bytes, 20, 120), "UTF-8");
+
         objNum = java.nio.ByteBuffer.wrap(Arrays.copyOfRange(bytes, 120, 122)).order(java.nio.ByteOrder.LITTLE_ENDIAN).getInt();
         if (java.nio.ByteBuffer.wrap(Arrays.copyOfRange(bytes, 122, 124)).order(java.nio.ByteOrder.LITTLE_ENDIAN).getInt() != 65535) {
             System.out.println("SituationError 2");
@@ -168,6 +158,7 @@ public class Situation {
             if (java.nio.ByteBuffer.wrap(Arrays.copyOfRange(bytes, index, (index + 2))).order(java.nio.ByteOrder.LITTLE_ENDIAN).getInt() == 65533) {
                 sprites.add(new Sprite(pointP, pointF, pointMass, pointMat[0], spriteName, pointTemp));
                 // add object function adding
+                objects.add(sprites.get(sprites.size() - 1).toBytes());
             }
 
 
@@ -176,6 +167,40 @@ public class Situation {
                 
         }
         return true;   
+    }
+
+    public ArrayList<> getSprites() {
+        return sprites;
+    }
+
+    public void setSprites(ArrayList<Sprites> newSprites) {
+        sprites.clear();
+        for (Sprite sprite : newSprites) {
+            sprites.add(sprite);
+        }
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public File getFile() {
+        return file;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDiscription() {
+        return discription;
+    }
+
+    public void writeBytesToList() throws Exception {
+        objects.clear();
+        for (int x = 0; x < sprites.size(); x++) {
+            objects.add(sprites.get(x).toByteList());
+        }
     }
     
 }

@@ -6,14 +6,25 @@ public class Sprite {
     private ArrayList<Point> points;
     private String name;
     private float[] cenOfMass;
-    public Sprite(float[][] pos, float[][] forces, float[] masses, int material, String name, float[] temps) {
-        float[] blank = {0, 0, 0};
+    private String path;
+    private String texturePath;
+    private int referenceID;
+
+
+    public Sprite(float[][] pos, float[][] forces, float[] masses, int material, String name, float[] temps, int referenceID) {
+        float[] blank = new float[]{0, 0, 0};
+        points = new ArrayList<Point>();
+        cenOfMass = new float[3];
+        this.referenceID = referenceID;
         for (int x = 0; x < pos.length; x++) {
             
             points.add(new Point(blank, forces[x], pos[x], masses[x], material, name, temps[x]));
         }
         calCenMass();
+    }
 
+    public ArrayList<byte> toByteList() {
+        ArrayList<byte> temp = new ArrayList<byte>();
 
         
     }

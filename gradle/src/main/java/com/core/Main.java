@@ -9,6 +9,7 @@ public class Main {
     private static WindowManager window;
     private static TestGame game;
     private static EngineManager engine;
+    private static PhysicsManager physics;
 
     public static void main(String[] args) {
 
@@ -16,7 +17,9 @@ public class Main {
         window = new WindowManager(90, "Test", 800, 600, false, false);
         game = new TestGame();
         engine = new EngineManager();
+        physics = new PhysicsManager(args);
         
+
         try {
             engine.start();
         } catch(Exception e) {

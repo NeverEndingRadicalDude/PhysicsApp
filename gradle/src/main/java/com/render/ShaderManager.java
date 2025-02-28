@@ -87,13 +87,11 @@ public class ShaderManager {
         
         
         if (vertexShaderID == 0) {
-            GL20.glDetachShader(programID, vertexShaderID);
-            System.out.println("Error with vertexShader");
+            System.out.println("Error with vertexShader: " + GL20.glGetShaderInfoLog(programID, 1024));
         }
 
         if (fragmentShaderID == 0) {
-            GL20.glDetachShader(programID, fragmentShaderID);
-            System.out.println("Error with fragmentShader");
+            System.out.println("Error with fragmentShader: " + GL20.glGetShaderInfoLog(programID, 1024));
         }
 
         GL20.glLinkProgram(programID);
