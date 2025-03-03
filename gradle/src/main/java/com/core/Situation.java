@@ -18,6 +18,18 @@ public class Situation {
     private int objNum;
     private ArrayList<Sprite> sprites;
 
+    public void updateForces(float time) throws Exception {
+        for (Sprite sprite : sprites) {
+            sprite.updateForces();
+        }
+    }
+
+    public void update(float time) throws Exception {
+        updateForces(time);
+        updatePositions(time);
+        updateVelocities(time);
+        checkCollisions(time);
+    }
 
     private float convertFloat(byte[] num) {
         return java.nio.ByteBuffer.wrap(num).order(java.nio.ByteOrder.LITTLE_ENDIAN).getFloat();

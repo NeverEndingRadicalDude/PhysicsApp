@@ -18,9 +18,17 @@ public class PhysicsManager {
             System.out.println("Error reading Situation " + args[0] + ", error message: " + e + ", stackTrace: ");
             e.printStackTrace(System.out);
         }
+
+
     }
 
-    
+    public void update(float time) throws Exception {
+        situation.update(time);
+    }
+
+
+
+
 
 
 
