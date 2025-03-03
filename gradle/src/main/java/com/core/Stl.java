@@ -18,6 +18,7 @@ public class Stl {
     private ArrayList<float[][]> faces;
     private File file;
     private float[] bounds;
+    private String texturePath;
 
     public Sprite genSprite() {
         float[][] positions = new float[points.size()][3];
@@ -30,7 +31,7 @@ public class Stl {
             mass[x] = 0.0f;
         }
         
-        return new Sprite(positions, blank, mass, 0, file.getName(), mass);
+        return new Sprite(positions, blank, mass, 0, file.getName(), mass, 0, file.getPath(), "");
 
 
     }

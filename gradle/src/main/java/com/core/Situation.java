@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class Situation {
-    private ArrayList<ArrayList<bytes>> objects;
+    private ArrayList<byte[]> objects;
     private String path;
     private File file;
     private String name;
@@ -40,14 +40,14 @@ public class Situation {
         in.close();
         System.out.println(e);
 
-        int index = 124;
+        int index = 126;
         boolean check = false;
 
         name = new String(Arrays.copyOfRange(bytes, 0, 20), "UTF-8");
         discription = new String(Arrays.copyOfRange(bytes, 20, 120), "UTF-8");
 
-        objNum = java.nio.ByteBuffer.wrap(Arrays.copyOfRange(bytes, 120, 122)).order(java.nio.ByteOrder.LITTLE_ENDIAN).getInt();
-        if (java.nio.ByteBuffer.wrap(Arrays.copyOfRange(bytes, 122, 124)).order(java.nio.ByteOrder.LITTLE_ENDIAN).getInt() != 65535) {
+        objNum = java.nio.ByteBuffer.wrap(Arrays.copyOfRange(bytes, 120, 124)).order(java.nio.ByteOrder.LITTLE_ENDIAN).getInt();
+        if (java.nio.ByteBuffer.wrap(Arrays.copyOfRange(bytes, 124, 126)).order(java.nio.ByteOrder.LITTLE_ENDIAN).getInt() != 65535) {
             System.out.println("SituationError 2");
         }
         boolean check2 = false;
@@ -63,11 +63,9 @@ public class Situation {
             index += 20;
             String spriteStlPath = new String(Arrays.copyOfRange(bytes, index, (index + 50)));
             index += 50;
-            String savedSpritePath = new String(Arrays.copyOfRange(bytes,index, (index + 50)));
+            String spriteTexturePath = new String(Arrays.copyOfRange(bytes,index, (index + 50)));
             index += 50;
             int numPoints = java.nio.ByteBuffer.wrap(Arrays.copyOfRange(bytes, index, (index + 4))).order(java.nio.ByteOrder.LITTLE_ENDIAN).getInt();
-            index += 4;
-            int numFaces = java.nio.ByteBuffer.wrap(Arrays.copyOfRange(bytes, index, (index + 4))).order(java.nio.ByteOrder.LITTLE_ENDIAN).getInt();
             index += 4;
 
             float[] posOffSet = new float[3];
@@ -157,7 +155,7 @@ public class Situation {
 
             }
             if (java.nio.ByteBuffer.wrap(Arrays.copyOfRange(bytes, index, (index + 2))).order(java.nio.ByteOrder.LITTLE_ENDIAN).getInt() == 65533) {
-                sprites.add(new Sprite(pointP, pointF, pointMass, pointMat[0], spriteName, pointTemp));
+                sprites.add(new Sprite(pointP, pointF, pointMass, pointMat[0], spriteName, pointTemp, spriteRef, spriteStlPath, spriteTexturePath));
                 // add object function adding
                 objects.add(sprites.get(sprites.size() - 1).toBytes());
             }
@@ -197,11 +195,36 @@ public class Situation {
         return discription;
     }
 
-    public void writeBytesToList() throws Exception {
+    public void writeBytesToList() {
         objects.clear();
         for (int x = 0; x < sprites.size(); x++) {
-            objects.add(sprites.get(x).toByteList());
+            objects.add(sprites.get(x).toByteArray());
         }
+    }
+
+    public void save() {
+        FileOutputStream out;
+        try {
+            out = new FileOutputStream(path);
+        } catch(FileNotFoundException e) {
+            System.out.println(e);
+            System.exit(0);
+        }
+        ByteBuffer temp = ByteBuffer.allocate(126);
+        char[] nameArray = name.toCharArray();
+        char[] discriptionArray = discription.toCharArray();
+        for (char ch : nameArray) {
+            temp.putChar(ch);
+        }
+        for (char ch : discriptionArray) {
+            temp.putChar(ch);
+        }
+        temp.putShort((short) 65535);
+        out.write(temp.array());
+        for (byte[] bytes : objects) {
+            out.write(bytes);
+        }
+        out.close();
     }
     
 }

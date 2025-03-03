@@ -8,29 +8,43 @@ public class Sprite {
     private ArrayList<Point> points;
     private String name;
     private float[] cenOfMass;
-    private String path;
     private String texturePath;
     private int referenceID;
+    private String stlPath;
+    private float[] posOffset;
+    private float[] rotationMatrix;
+    private float[] movementVector;
+    private float[] rotationVector;
 
 
-    public Sprite(float[][] pos, float[][] forces, float[] masses, int material, String name, float[] temps, int referenceID) {
+    public Sprite(float[][] pos, float[][] forces, float[] masses, int material, String name, float[] temps, int referenceID, String stlPath, String texturePath) {
         float[] blank = new float[]{0, 0, 0};
         points = new ArrayList<Point>();
         cenOfMass = new float[3];
         this.referenceID = referenceID;
+        this.stlPath = stlPath;
+        this.texturePath = texturePath;
         for (int x = 0; x < pos.length; x++) {
             
-            points.add(new Point(blank, forces[x], pos[x], masses[x], material, name, temps[x]));
+            points.add(new Point(blank, forces[x], pos[x], masses[x], material, name, temps[x], x));
         }
         calCenMass();
     }
 
-    public ArrayList<byte> toByteList() {
+    public void setReferenceID(int id) {
+        referenceID = id;
+    }
+
+    public void setTexturePath(String texPath) {
+        texturePath = texPath;
+    }
+
+    public byte[] toByteArray() {
         int length = 0;
         length += 4; // refID
         length += 20; // name;
         length += 50; // stlPath
-        length += 50; // savedSpritePath
+        length += 50; // texturePath
         length += 4; // objPointNum
         length += 4; // objFaceNum
         length += 12; // objPosOffset
@@ -50,17 +64,61 @@ public class Sprite {
             length += 2; // $0000
         }
         length += 2; // $fffd
-        ByteBufferExtended temp = ByteBuffer.allocate(length);
+        ByteBuffer temp = ByteBuffer.allocate(length);
         
         char[] nameArray = name.toCharArray();
-        char[] pathArray = path.toCharArray();
         char[] texPathArray = texturePath.toCharArray();
+        char[] stlPathArray = stlPath.toCharArray();
 
         temp.putInt(referenceID);
         for (char ch : nameArray) {
             temp.putChar(ch);
         }
-        
+        for (char ch : stlPathArray) {
+            temp.putChar(ch);
+        }
+        for (char ch : texturePath) {
+            temp.putChar(ch);
+        }
+        temp.putInt(points.size());
+        temp.putFloat(posOffset[0]);
+        temp.putFloat(posOffset[1]);
+        temp.putFloat(posOffset[2]);
+        temp.putFloat(rotationMatrix[0]);
+        temp.putFloat(rotationMatrix[1]);
+        temp.putFloat(rotationMatrix[2]);
+        temp.putFloat(movementVector[0]);
+        temp.putFloat(movementVector[1]);
+        temp.putFloat(movementVector[2]);
+        temp.putFloat(rotationVector[0]);
+        temp.putFloat(rotationVector[1]);
+        temp.putFloat(rotationVector[2]);
+        temp.putShort((short) 65534);
+        for (Point p : points) {
+            temp.putInt(p.getReferenceID());
+            temp.putFloat(p.getForce()[0]);
+            temp.putFloat(p.getForce()[1]);
+            temp.putFloat(p.getForce()[2]);
+            temp.putInt(p.getMass());
+            temp.putFloat(p.getVelocity()[0]);
+            temp.putFloat(p.getVelocity()[1]);
+            temp.putFloat(p.getVelocity()[2]);
+            
+            char[] pointNameArray = p.getName().toCharArray();
+            for (char ch : pointNameArray) {
+                temp.putChar(ch);
+            }
+
+            temp.putFloat(p.getPosition()[0]);
+            temp.putFloat(p.getPosition()[1]);
+            temp.putFloat(p.getPosition()[2]);
+            temp.putInt(p.getMaterial());
+            temp.putFloat(p.getTemp());
+            temp.putShort((short) 0);
+
+        }
+        temp.putShort((short) 65533);
+        return temp.array();
     }
 
     public byte[] intToByteArray(int input) {

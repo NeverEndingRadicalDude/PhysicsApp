@@ -2,20 +2,29 @@ package com.core;
 
 public class Point {
   private float[] velocity;
-  private float[] netForce;
+  private float[] force;
   private float mass;
   private int material;
   private float temp;
   private String name;
   private float[] position;
+  private int referenceID;
   
   public void setMass(float m) {
     mass = m;
   }
 
+  public void setReferenceID(int id) {
+    referenceID = id;
+  }
+
+  public int getReferenceID() {
+    return referenceID;
+  }
+
   public void setForce(float[] f) {
     try {
-      netForce = f;
+      force = f;
     } catch(IndexOutOfBoundsException e) {
       System.out.println(e);
       System.out.println("Point.java.setForce() error 1");
@@ -43,35 +52,36 @@ public class Point {
     name = n;
   }
 
-  public Point(float[] v, float[] nf, float[] p, float m, int mat, String n, float t) {
+  public Point(float[] v, float[] f, float[] p, float m, int mat, String n, float t, int id) {
     
     velocity = v;
-    netForce = nf;
+    force = f;
     mass = m;
     material = mat;
     temp = t;
     name = n;
     position = p;
+    referenceID = id;
     
   }
   
-  public float[] getV() {
+  public float[] getVelocity() {
     return velocity;
   }
   
-  public float[] getNF() {
-    return netForce;
+  public float[] getForce() {
+    return force;
   }
   
-  public float[] getPos() {
+  public float[] getPosition() {
     return position;
   }
   
-  public float getM() {
+  public float getMass() {
     return mass;
   }
   
-  public int getMat() {
+  public int getMaterial() {
     return material;
   }
   
@@ -79,7 +89,7 @@ public class Point {
     return name;
   }
   
-  public float getT() {
+  public float getTemp() {
     return temp;
   }
   
