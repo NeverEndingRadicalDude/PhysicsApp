@@ -24,6 +24,12 @@ public class Situation {
         }
     }
 
+    public void init() {
+        for (Sprite sprite : sprites) {
+            sprite.init();
+        }
+    }
+
     public void update(float time) throws Exception {
         updateForces(time);
         updatePositions(time);

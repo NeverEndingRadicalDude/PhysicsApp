@@ -9,9 +9,18 @@ public class Point {
   private String name;
   private float[] position;
   private int referenceID;
+  private float[] moment;
   
   public void setMass(float m) {
     mass = m;
+  }
+
+  public float[] getMoment() {
+    return moment;
+  }
+
+  public void setMoment(float[] moment) {
+    this.moment = moment;
   }
 
   public void setReferenceID(int id) {
@@ -62,6 +71,20 @@ public class Point {
     name = n;
     position = p;
     referenceID = id;
+    
+  }
+
+  public Point(float[] v, float[] f, float[] p, float m, int mat, String n, float t, int id, float[] moment) {
+    
+    velocity = v;
+    force = f;
+    mass = m;
+    material = mat;
+    temp = t;
+    name = n;
+    position = p;
+    referenceID = id;
+    this.moment = moment;
     
   }
   

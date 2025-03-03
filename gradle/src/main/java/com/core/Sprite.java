@@ -15,6 +15,7 @@ public class Sprite {
     private float[] rotationMatrix;
     private float[] movementVector;
     private float[] rotationVector;
+    private float[] netAcceleration;
 
 
     public Sprite(float[][] pos, float[][] forces, float[] masses, int material, String name, float[] temps, int referenceID, String stlPath, String texturePath) {
@@ -179,8 +180,46 @@ public class Sprite {
         }
     }
 
-    private void calculateForces() {
+    private float calculateRadius(float[] pos1, float[] pos2) {
+        float xDis = (pos1[0] - pos2[0]);
+        float yDis = (pos1[1] - pos2[1]);
+        xDis = xDis * xDis;
+        yDis = yDis * yDis;
+        return (float) Math.sqrt(xDis + yDis);
+    }
 
+    private float[] calculateMoment(float[] pos) {
+        float[] totalMoment = new float[]{0.0f, 0.0f, 0.0f};
+        for (Point point : points) {
+            totalMoment[0] += point.getMass * calculateRadius(new float[]{pos[1], pos[2]}, new float[]{point.getPosition()[1], point.getPosition()[2]});
+            totalMoment[1] += point.getMass * calculateRadius(new float[]{pos[0], pos[2]}, new float[]{point.getPosition()[0], point.getPosition()[2]});
+            totalMoment[2] += point.getMass * calculateRadius(new float[]{pos[0], pos[1]}, new float[]{point.getPosition()[0], point.getPosition()[1]});
+        }
+        return totalMoment;
+    }
+
+    public void init() {
+        for (Point point : points) {
+            point.setMoment(calculateMoment(point.getPosition()));
+        }
+    }
+
+    public float[] calculateTorqueScale(Point point) {
+        float[] netTorque = new float[]{0.0f, 0.0f, 0.0f};
+        float[] pointPos = p.getPosition();
+        float[] force = p.getForce();
+        for (Point p : points) {
+            // finish
+        }
+    }
+
+    private void calculateForces() {
+        System.out.println("debug: calculating forces");
+        float[] netAccelerationTemp = new float[]{0.0f, 0.0f, 0.0f};
+        for (Point point : points) {
+            float[] netTorque = calculateTorque(point);
+            
+        }
     }
 
     private void checkPointForInterior(double[] p) {

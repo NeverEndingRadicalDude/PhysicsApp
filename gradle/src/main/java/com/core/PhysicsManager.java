@@ -21,6 +21,9 @@ public class PhysicsManager {
 
 
     }
+    public void init() {
+        situation.init();
+    }
 
     public void update(float time) throws Exception {
         situation.update(time);
