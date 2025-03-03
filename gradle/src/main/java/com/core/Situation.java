@@ -37,6 +37,7 @@ public class Situation {
 
         byte[] bytes = new byte[(int) file.length()];
         in.read(bytes);
+        in.close();
         System.out.println(e);
 
         int index = 124;
@@ -106,7 +107,7 @@ public class Situation {
                 System.exit(0);
             }
 
-            short[] pointRef = new int[numPoints];
+            int[] pointRef = new int[numPoints];
             float[][] pointF = new float[numPoints][3];
             float[] pointMass = new float[numPoints];
             float[][] pointV = new float[numPoints][3];
