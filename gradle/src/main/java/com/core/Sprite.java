@@ -121,10 +121,6 @@ public class Sprite {
         return temp.array();
     }
 
-    public byte[] intToByteArray(int input) {
-
-    }
-
     public void writeToFile(byte[] bytes, File file) {
         FileOutputStream out;
         try {
