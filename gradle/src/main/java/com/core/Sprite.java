@@ -209,7 +209,8 @@ public class Sprite {
         float[] pointPos = p.getPosition();
         float[] force = p.getForce();
         for (Point p : points) {
-            // finish
+            float[] moment = calculateMoment(p.getPosition);
+            
         }
     }
 
