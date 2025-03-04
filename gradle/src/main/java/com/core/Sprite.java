@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.nio.ByteBuffer;
 import java.nio.FileOutputStream;
 
+
 public class Sprite {
     private ArrayList<Point> points;
     private String name;
@@ -204,22 +205,33 @@ public class Sprite {
         }
     }
 
+
     public float[] calculateTorqueScale(Point point) {
         float[] netTorque = new float[]{0.0f, 0.0f, 0.0f};
         float[] pointPos = p.getPosition();
         float[] force = p.getForce();
         for (Point p : points) {
-            float[] moment = calculateMoment(p.getPosition);
-            
+            //calculate xvec torque
+            float[] pos2 = p.getPosition();
+            netTorque[0] += force[1] * (pos2[2] - pointPos[2]);
+            netTorque[0] += force[2] * -1 * (pos2[1] - pointPos[1]);
+
+            netTorque[1] += force[]
+
         }
+    }
+
+    private float dotProduct(float[] vec1, float[] vec2) {
+        return vec1[0] * vec2[0] + vec1[1] * vec2[1] + vec1[2] * vec2[2];
     }
 
     private void calculateForces() {
         System.out.println("debug: calculating forces");
         float[] netAccelerationTemp = new float[]{0.0f, 0.0f, 0.0f};
         for (Point point : points) {
-            float[] netTorque = calculateTorque(point);
-            
+            float[] netTorque = calculateTorqueScale(point);
+            float[] force = point.getForce();
+
         }
     }
 
