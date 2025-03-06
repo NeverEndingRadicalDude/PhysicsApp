@@ -213,12 +213,16 @@ public class Sprite {
         for (Point p : points) {
             //calculate xvec torque
             float[] pos2 = p.getPosition();
-            netTorque[0] += force[1] * (pos2[2] - pointPos[2]);
-            netTorque[0] += force[2] * -1 * (pos2[1] - pointPos[1]);
+            netTorque[0] += force[1] * -1 * (pos2[2] - pointPos[2]);
+            netTorque[0] += force[2] * (pos2[1] - pointPos[1]);
 
-            netTorque[1] += force[2] * (pos2[1] - pointPos[1]);
+            netTorque[1] += force[2] * -1 * (pos2[0] - pointPos[0]);
+            netTorque[1] += force[0] * (pos2[2] - pointPos[2]);
 
+            netTorque[2] += force[0] * (pos2[1] - pointPos[1]);
+            netTorque[2] += force[1] * -1 * (pos2[0] - pointPos[0]);
         }
+        return netTorque;
     }
 
     private float dotProduct(float[] vec1, float[] vec2) {
