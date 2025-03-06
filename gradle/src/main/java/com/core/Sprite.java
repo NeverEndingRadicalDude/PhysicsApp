@@ -206,23 +206,27 @@ public class Sprite {
     }
 
 
-    public float[] calculateTorqueScale(Point point) {
+    public float[] calculateTorque(Point point) {
         float[] netTorque = new float[]{0.0f, 0.0f, 0.0f};
         float[] pointPos = p.getPosition();
         float[] force = p.getForce();
+        float[] netAccelerationTemp = new float[]{0.0f, 0.0f, 0.0f};
         for (Point p : points) {
             //calculate xvec torque
             float[] pos2 = p.getPosition();
-            netTorque[0] += force[1] * -1 * (pos2[2] - pointPos[2]);
-            netTorque[0] += force[2] * (pos2[1] - pointPos[1]);
+            float pointMass = p.getMass();
+            netTorque[0] += force[1] * -1 * (pos2[2] - pointPos[2]) * pointMass;
+            netTorque[0] += force[2] * (pos2[1] - pointPos[1]) * pointMass;
 
-            netTorque[1] += force[2] * -1 * (pos2[0] - pointPos[0]);
-            netTorque[1] += force[0] * (pos2[2] - pointPos[2]);
+            netTorque[1] += force[2] * -1 * (pos2[0] - pointPos[0]) * pointMass;
+            netTorque[1] += force[0] * (pos2[2] - pointPos[2]) * pointMass;
 
-            netTorque[2] += force[0] * (pos2[1] - pointPos[1]);
-            netTorque[2] += force[1] * -1 * (pos2[0] - pointPos[0]);
+            netTorque[2] += force[0] * (pos2[1] - pointPos[1]) * pointMass;
+            netTorque[2] += force[1] * -1 * (pos2[0] - pointPos[0]) * pointMass;
+
         }
-        return netTorque;
+
+        return netTorque 
     }
 
     private float dotProduct(float[] vec1, float[] vec2) {
@@ -232,9 +236,12 @@ public class Sprite {
     private void calculateForces() {
         System.out.println("debug: calculating forces");
         float[] netAccelerationTemp = new float[]{0.0f, 0.0f, 0.0f};
+        float[] netRotationTemp = new float[]{0.0f, 0.0f, 0.0f};
         for (Point point : points) {
             float[] netTorque = calculateTorqueScale(point);
             float[] force = point.getForce();
+            float[] a
+
 
         }
     }
