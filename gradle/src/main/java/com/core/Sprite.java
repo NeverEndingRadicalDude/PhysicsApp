@@ -216,7 +216,7 @@ public class Sprite {
             netTorque[0] += force[1] * (pos2[2] - pointPos[2]);
             netTorque[0] += force[2] * -1 * (pos2[1] - pointPos[1]);
 
-            netTorque[1] += force[]
+            netTorque[1] += force[2] * (pos2[1] - pointPos[1]);
 
         }
     }
