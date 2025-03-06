@@ -226,7 +226,7 @@ public class Sprite {
 
         }
 
-        return netTorque 
+        return netTorque;
     }
 
     private float dotProduct(float[] vec1, float[] vec2) {
