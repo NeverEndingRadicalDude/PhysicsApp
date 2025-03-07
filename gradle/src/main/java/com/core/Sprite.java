@@ -239,8 +239,7 @@ public class Sprite {
         float[] netRotationTemp = new float[]{0.0f, 0.0f, 0.0f};
         for (Point point : points) {
             float[] netTorque = calculateTorqueScale(point);
-            float[] force = point.getForce();
-            float[] a
+            float[] rotation =
 
 
         }
