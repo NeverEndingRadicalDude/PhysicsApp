@@ -203,6 +203,11 @@ public class Sprite {
         for (Point point : points) {
             point.setMoment(calculateMoment(point.getPosition()));
         }
+        for (Point point : points) {
+            netAcceleration[0] += point.getForce()[0];
+            netAcceleration[1] += point.getForce()[1];
+            netAcceleration[2] += point.getForce()[2];
+        }
     }
 
 
