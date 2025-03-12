@@ -200,14 +200,18 @@ public class Sprite {
     }
 
     public void init() {
-        for (Point point : points) {
-            point.setMoment(calculateMoment(point.getPosition()));
-        }
+        netAcceleration = new float[]{0.0f, 0.0f, 0.0f};
         for (Point point : points) {
             netAcceleration[0] += point.getForce()[0];
             netAcceleration[1] += point.getForce()[1];
             netAcceleration[2] += point.getForce()[2];
         }
+        for (Point point : points) {
+            point.setMoment(calculateMoment(point.getPosition()));
+            float[] temp = calculateTorque(point);
+            
+        }
+
     }
 
 
@@ -217,7 +221,6 @@ public class Sprite {
         float[] force = p.getForce();
         float[] netAccelerationTemp = new float[]{0.0f, 0.0f, 0.0f};
         for (Point p : points) {
-            //calculate xvec torque
             float[] pos2 = p.getPosition();
             float pointMass = p.getMass();
             netTorque[0] += force[1] * -1 * (pos2[2] - pointPos[2]) * pointMass;
